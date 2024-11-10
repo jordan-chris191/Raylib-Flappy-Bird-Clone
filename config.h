@@ -15,6 +15,6 @@
 #define NUM_FRAMES 1
 #define SCREEN_HEIGHT 700
 #define SCREEN_WIDTH 400
-#define GAP_HEIGHT 120  
+#define GAP_HEIGHT 110  
 #define SPEED 180
 #define GROUND_HEIGHT 100

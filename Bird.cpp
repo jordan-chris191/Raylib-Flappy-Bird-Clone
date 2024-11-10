@@ -6,11 +6,11 @@ Bird::Bird()
     PosX = 50;
     PosY = 350;
     vY = 0;
-    size = 38;
-    currentFrame = 0;
-    animationTime = 0.1f;
-    timeSinceLastFrame = 0.0f;
-    rotationAngle = 0.0f;
+    Size = 38;
+    CurrentFrame = 0;
+    AnimationTime = 0.1f;
+    TimeSinceLastFrame = 0.0f;
+    RotationAngle = 0.0f;
     Texture2D textures[3];
 }
 
@@ -26,37 +26,37 @@ void Bird::Update(float deltaTime)
 {
     int rotationSpeed = 3;
     if (vY < 0) {
-        rotationAngle = -25.0f;
+        RotationAngle = -25.0f;
     }
     else if (vY > 0) {
-        rotationAngle += 100.0f * (deltaTime*rotationSpeed);
-        if (rotationAngle > 70.0f) {        
-            rotationAngle = 70.0f;
+        RotationAngle += 100.0f * (deltaTime*rotationSpeed);
+        if (RotationAngle > 70.0f) {        
+            RotationAngle = 70.0f;
         }
     }
-    timeSinceLastFrame += deltaTime;
-    if (timeSinceLastFrame >= animationTime)
+    TimeSinceLastFrame += deltaTime;
+    if (TimeSinceLastFrame >= AnimationTime)
     {
-        timeSinceLastFrame = 0.0f;
-        currentFrame = (currentFrame + 1) % 3;
+        TimeSinceLastFrame = 0.0f;
+        CurrentFrame = (CurrentFrame + 1) % 3;
     }
 }
 
 void Bird::Draw() const
 {
    
-    float aspectRatio = (float)textures[currentFrame].width / textures[currentFrame].height;
-    float destWidth = size;
-    float destHeight = size / aspectRatio;
+    float aspectRatio = (float)textures[CurrentFrame].width / textures[CurrentFrame].height;
+    float destWidth = Size;
+    float destHeight = Size / aspectRatio;
 
-    Vector2 origin = { textures[currentFrame].width / 2.0f, textures[currentFrame].height / 2.0f };
+    Vector2 origin = { textures[CurrentFrame].width / 2.0f, textures[CurrentFrame].height / 2.0f };
 
     DrawTexturePro(
-        textures[currentFrame],                                   
-        Rectangle{ 0, 0, (float)textures[currentFrame].width, (float)textures[currentFrame].height },
+        textures[CurrentFrame],                                   
+        Rectangle{ 0, 0, (float)textures[CurrentFrame].width, (float)textures[CurrentFrame].height },
         Rectangle{ PosX, PosY, destWidth, destHeight },             
         origin,                                                      
-        rotationAngle,                                               
+        RotationAngle,                                               
         WHITE                                                        
     );
 }

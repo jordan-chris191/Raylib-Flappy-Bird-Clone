@@ -2,8 +2,8 @@
 
 void ApplyFlight(float& posY, float& vY)
 {
-	float flightStrength = 7;
-	vY = -flightStrength;
+	float LiftStrength = 7;
+	vY = -LiftStrength;
 	posY += vY;
 }
 

@@ -7,11 +7,11 @@ class Bird {
 public:
     float PosX, PosY;        // Position of the bird
     float vY;                // Vertical velocity
-    float size;              // Size of the bird (for collision detection)
-    int currentFrame;        // Current frame for animation
-    float animationTime;     // Time per frame for animation
-    float timeSinceLastFrame; // Timer to keep track of frame changes
-    float rotationAngle = 0.0f;
+    float Size;              // Size of the bird (for collision detection)
+    int CurrentFrame;        // Current frame for animation
+    float AnimationTime;     // Time per frame for animation
+    float TimeSinceLastFrame; // Timer to keep track of frame changes
+    float RotationAngle = 0.0f;
     Texture2D textures[3];  
     Bird();
     ~Bird();
