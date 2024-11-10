@@ -63,9 +63,9 @@ void Bird::Draw() const
 
 void Bird::LoadTextures()
 {
-    Image BirdUp = LoadImage("C:/Users/user/desktop/FlappyBird_assets/yellowbird-upflap.png");
-    Image BirdMid = LoadImage("C:/Users/user/desktop/FlappyBird_assets/yellowbird-midflap.png");
-    Image BirdDown = LoadImage("C:/Users/user/desktop/FlappyBird_assets/yellowbird-downflap.png");
+    Image BirdUp = LoadImage("FlappyBird_assets/yellowbird-upflap.png");
+    Image BirdMid = LoadImage("FlappyBird_assets/yellowbird-midflap.png");
+    Image BirdDown = LoadImage("FlappyBird_assets/yellowbird-downflap.png");
 
     textures[0] = LoadTextureFromImage(BirdUp);
     textures[1] = LoadTextureFromImage(BirdMid);

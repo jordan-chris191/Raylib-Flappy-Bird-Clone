@@ -21,7 +21,7 @@ Ground::~Ground()
 
 void Ground::LoadTexture()
 {
-    Image Base = LoadImage("C:/Users/user/desktop/FlappyBird_assets/base.png");
+    Image Base = LoadImage("FlappyBird_assets/base.png");
 	texture = LoadTextureFromImage(Base);
     UnloadImage(Base);
 }
