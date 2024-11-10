@@ -1,4 +1,4 @@
-#define _CRT_SECURE_NO_WARNINGS
+
 #include "config.h"
 Bird bird;
 Texture2D digitTextures[10];
@@ -11,7 +11,7 @@ bool isPaused = false;
 bool isGameStarted = false;
 bool isGameOver = false;
 int numPipes = 2;
-float deltaTime = 0.0f; 
+float deltaTime = 0.0f;
 enum GameState {
     START,
     RUNNING,
@@ -21,8 +21,8 @@ enum GameState {
 GameState currentGameState = START;
 void Start()
 {
-    float hoverAmplitude = 1.0f; 
-    float hoverFrequency = 2.0f;  
+    float hoverAmplitude = 1.0f;
+    float hoverFrequency = 5.0f;
     float hoverOffset = hoverAmplitude * sin(GetTime() * hoverFrequency);
     bird.PosY += hoverOffset;
     bird.Update(GetFrameTime());
@@ -31,7 +31,7 @@ void Start()
     ground.Draw();
     ground2.X = ground.X + 335;
     ground2.Draw();
-  
+
     for (auto& pipe : pipes) pipe.Draw();
 }
 void InitPipes() {
@@ -41,6 +41,8 @@ void InitPipes() {
         pipes.push_back(newPipe);
     }
 }
+
+
 void HandleCollision() {
     for (auto& pipe : pipes) {
         bool inGap = (bird.PosY > pipe.PosY && bird.PosY < pipe.PosY + GAP_HEIGHT);
@@ -52,7 +54,7 @@ void HandleCollision() {
                 return;
             }
             else {
-                
+
                 pipe.color = MARIOGREEN;
             }
         }
@@ -61,6 +63,7 @@ void HandleCollision() {
         }
 
         if (pipe.PosX + pipe.Width < bird.PosX && !pipe.passed) {
+            //if the bird succesfully passed through a pipe add score
             score++;
             pipe.passed = true;
         }
@@ -70,6 +73,13 @@ void HandleCollision() {
         }
     }
 }
+
+void HandleScreenTap()
+{
+
+
+}
+
 void HandleGameOver()
 {
     if (isGameOver) {
@@ -88,7 +98,7 @@ void HandlePause() {
     if (isPaused) {
         deltaTime = 0;
         for (auto& pipe : pipes) pipe.Speed = 0;
-      
+
         gravity.Strength = 0;
     }
     else {
@@ -104,13 +114,13 @@ void RunGame() {
     InitPipes();
 }
 void HandleGravity() {
-    if (bird.PosY <= SCREEN_HEIGHT-GROUND_HEIGHT - bird.Size+20) {
+    if (bird.PosY <= SCREEN_HEIGHT - GROUND_HEIGHT - bird.Size + 20) {
         ApplyGravity2d(bird.PosY, bird.vY, gravity.Strength);
-      
+
     }
-    else 
+    else
     {
-        bird.PosY = SCREEN_HEIGHT-GROUND_HEIGHT - bird.Size+20;
+        bird.PosY = SCREEN_HEIGHT - GROUND_HEIGHT - bird.Size + 20;
         bird.vY = 0;
         //when the bird touches the ground
         isGameOver = true;
@@ -151,7 +161,7 @@ void DrawUI() {
 }
 void RunFlappyBirdApp() {
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Flappy Bird Clone");
-    Image icon = LoadImage("C:/Users/user/desktop/FlappyBird_assets/flappy-1.png");
+    Image icon = LoadImage("FlappyBird_assets/flappy-1.png");
 
     SetWindowIcon(icon);
 
@@ -163,20 +173,20 @@ void RunFlappyBirdApp() {
     ground2.LoadTexture();
 
 
-    Texture2D button = LoadTexture("C:/Users/user/desktop/FlappyBird_assets/restart-button.png");
+    Texture2D button = LoadTexture("FlappyBird_assets/restart-button.png");
     float frameHeight = (float)button.height / NUM_FRAMES;
     Rectangle sourceRec = { 0, 0, (float)button.width, frameHeight };
-    Rectangle btnBounds = { SCREEN_WIDTH / 2.0f - button.width / 2.0f, SCREEN_HEIGHT / 2.0f - button.height+300 / NUM_FRAMES / 2.0f, (float)button.width, frameHeight };
-    int btnState = 0;             
-    bool btnAction = false;       
+    Rectangle btnBounds = { SCREEN_WIDTH / 2.0f - button.width / 2.0f, SCREEN_HEIGHT / 2.0f - button.height + 300 / NUM_FRAMES / 2.0f, (float)button.width, frameHeight };
+    int btnState = 0;
+    bool btnAction = false;
     Vector2 mousePoint = { 0.0f, 0.0f };
-    Texture2D gameOver = LoadTexture("C:/Users/user/desktop/FlappyBird_assets/gameover.png");
-    Texture2D background = LoadTexture("C:/Users/user/desktop/FlappyBird_assets/background-day.png");
-    Sound wing = LoadSound("C:/Users/user/desktop/FlappyBird_assets/wing.wav");
-    Sound swoosh = LoadSound("C:/Users/user/desktop/FlappyBird_assets/swoosh.wav");
-    Sound die = LoadSound("C:/Users/user/desktop/FlappyBird_assets/audio_die.wav");
-    Sound point = LoadSound("C:/Users/user/desktop/FlappyBird_assets/point.wav");
-    Image startMessage = LoadImage("C:/Users/user/desktop/FlappyBird_assets/message.png");
+    Texture2D gameOver = LoadTexture("FlappyBird_assets/gameover.png");
+    Texture2D background = LoadTexture("FlappyBird_assets/background-day.png");
+    Sound wing = LoadSound("FlappyBird_assets/wing.wav");
+    Sound swoosh = LoadSound("FlappyBird_assets/swoosh.wav");
+    Sound die = LoadSound("FlappyBird_assets/audio_die.wav");
+    Sound point = LoadSound("FlappyBird_assets/point.wav");
+    Image startMessage = LoadImage("FlappyBird_assets/message.png");
     Texture2D startMessageTexture = LoadTextureFromImage(startMessage);
     UnloadImage(startMessage);
 
@@ -192,7 +202,7 @@ void RunFlappyBirdApp() {
         sourceRec.y = btnState * frameHeight;
         float scaleX = (float)SCREEN_WIDTH / (float)background.width;
         float scaleY = (float)SCREEN_HEIGHT / (float)background.height;
-        float scale = (scaleX < scaleY) ? scaleX+0.05 : scaleY+0.05;
+        float scale = (scaleX < scaleY) ? scaleX + 0.05 : scaleY + 0.05;
         Vector2 back = { (SCREEN_WIDTH - background.width * scale) / 2, (SCREEN_HEIGHT - background.height * scale) / 2 };
         DrawTextureEx(background, back, 0.0f, scale, WHITE);
 
@@ -217,16 +227,17 @@ void RunFlappyBirdApp() {
                 if (IsKeyPressed(KEY_SPACE) && !isGameOver) PlaySound(wing);
                 for (auto& pipe : pipes)
                 {
-                    if (pipe.PosX + pipe.Width < bird.PosX) 
+                    if (pipe.PosX + pipe.Width < bird.PosX)
                     {
                         PlaySound(point);
                     }
                 }
-            
+
                 HandleGravity();
                 HandleCollision();
                 HandleGameOver();
 
+               
                 if (isGameOver) {
                     currentGameState = GAME_OVER;
                 }
@@ -234,10 +245,8 @@ void RunFlappyBirdApp() {
             DrawEntities();
             bird.Update(deltaTime);
             bird.Draw();
-          
             DrawUI();
             break;
-
         case PAUSED:
             if (IsKeyPressed(KEY_P)) {
                 currentGameState = RUNNING;
@@ -261,11 +270,11 @@ void RunFlappyBirdApp() {
             if (bird.RotationAngle > 70.0f) {
                 bird.RotationAngle = 70.0f;
             }
-           
+
             DrawEntities();
             bird.Draw();
             DrawTexture(gameOver, SCREEN_WIDTH / 2 - gameOver.width / 2,
-                SCREEN_HEIGHT / 2 - gameOver.height - 200 / 2, WHITE);
+                SCREEN_HEIGHT / 2 - gameOver.height - 100 / 2, WHITE);
             Vector2 ButtonBounds = { btnBounds.x, btnBounds.y };
             DrawTextureRec(button, sourceRec, ButtonBounds, WHITE);
 
@@ -275,21 +284,21 @@ void RunFlappyBirdApp() {
                     btnState = 2;
                     PlaySound(swoosh);
                 }
-                
+
                 else
                 {
-                    btnState = 1; // Mouse is hovering, set to "HOVER" state
-                    btnBounds.y = 450;
+                    btnState = 1;
+                    btnBounds.y = 390;
                 }
-                   
+
                 if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT)) {
-                    btnAction = true; 
+                    btnAction = true;
                 }
             }
-            else 
+            else
             {
                 btnState = 0;
-                btnBounds.y = 460;
+                btnBounds.y = 400;
             }
 
             if (btnAction) {
